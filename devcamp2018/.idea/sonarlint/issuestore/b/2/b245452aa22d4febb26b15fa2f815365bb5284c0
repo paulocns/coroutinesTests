@@ -1,0 +1,4 @@
+
+msquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(Ä«à
+Hsquid:S3398"'Move this method into "LoaderCallBack".(íÈ½§ùÿÿÿÿ8Äÿ»¸¢,
+usquid:S1450"YRemove the "mViewModel" field and declare it as a local variable in the relevant methods.(Ñ€ú8”›ì·¢,

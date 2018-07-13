@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <data>
+
+    <import type="android.view.View"/>
+
+    <variable
+        name="viewModel"
+        type="com.psato.devfest.presentation.MVVM.QueryViewModel"/>
+</data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingStart="8dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/login_another_account_branchInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/show_name"
+                    android:importantForAccessibility="no"
+                    android:textColorHint="@android:color/background_dark">
+
+
+                    <EditText
+                        android:id="@+id/edit_query"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:text="@={viewModel.query}"
+                        android:maxLines="1"/>
+                </android.support.design.widget.TextInputLayout>
+
+
+                <Button
+                    android:id="@+id/search_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/search"
+                    android:onClick="@{viewModel::onQueryClick}"/>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/show_response"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:textColor="@android:color/black"
+                android:text="@{viewModel.result}"
+                android:textSize="20sp"/>
+        </LinearLayout>
+        <FrameLayout
+            android:id="@+id/loading_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#88000000"
+            android:visibility="@{viewModel.showLoading}"
+            android:clickable="true">
+            <ProgressBar
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:theme="@style/Widget.AppCompat.ProgressBar"/>
+        </FrameLayout>
+    </FrameLayout>
+</layout>

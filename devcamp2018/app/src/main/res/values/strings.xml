@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DevFest</string>
+    <string name="mvp">MVP</string>
+    <string name="mvvm">MVVM</string>
+    <string name="search">search</string>
+    <string name="show_name">show name</string>
+    <string name="error">unable to find show</string>
+</resources>
