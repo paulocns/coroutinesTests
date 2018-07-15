@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DevFest</string>
+    <string name="app_name">DevCamp</string>
     <string name="mvp">MVP</string>
     <string name="mvvm">MVVM</string>
     <string name="search">search</string>

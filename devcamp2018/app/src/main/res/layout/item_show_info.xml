@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.psato.devfest.presentation.showlist.ShowItemViewModel"/>
+            type="com.psato.devcamp.presentation.showlist.ShowItemViewModel"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
