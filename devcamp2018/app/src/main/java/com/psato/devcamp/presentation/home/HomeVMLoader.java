@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 
 import com.psato.devcamp.di.component.ApplicationComponent;
-import com.psato.devcamp.di.component.DaggerHomeComponent;
 import com.psato.devcamp.presentation.base.BaseViewModel;
 import com.psato.devcamp.presentation.base.ViewModelLoader;
 
@@ -24,12 +23,12 @@ public class HomeVMLoader extends ViewModelLoader {
 
     @Override
     protected ViewModel initializeInjector() {
-        ViewModelHolder viewModelHolder = new ViewModelHolder();
-        DaggerHomeComponent.builder()
-                .applicationComponent(mApplicationComponent)
-                .build()
-                .inject(viewModelHolder);
-        return viewModelHolder.mViewModel;
+//        ViewModelHolder viewModelHolder = new ViewModelHolder();
+//        DaggerHomeComponent.builder()
+//                .applicationComponent(mApplicationComponent)
+//                .build()
+//                .inject(viewModelHolder);
+        return null;
     }
 
     public class ViewModelHolder {

@@ -16,6 +16,7 @@
 package com.psato.devcamp.di.module;
 
 import com.psato.devcamp.data.remote.APIConstants;
+import com.psato.devcamp.di.component.ViewModelSubComponent;
 import com.psato.devcamp.infrastructure.DevCampApplication;
 import com.psato.devcamp.data.remote.APIConstants;
 import com.psato.devcamp.infrastructure.DevCampApplication;
@@ -33,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Dagger module that provides objects which will live during the application lifecycle.
  */
-@Module
+@Module(subcomponents = {ViewModelSubComponent.class})
 public class ApplicationModule {
     private final DevCampApplication mApplication;
 
