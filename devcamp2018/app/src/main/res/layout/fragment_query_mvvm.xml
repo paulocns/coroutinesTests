@@ -59,6 +59,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
                     android:text="@string/search"
+                    android:enabled="@{viewModel.searchEnabled}"
                     android:onClick="@{viewModel::onQueryClick}"/>
 
 

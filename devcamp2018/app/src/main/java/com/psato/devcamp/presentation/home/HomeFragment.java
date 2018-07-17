@@ -1,7 +1,9 @@
 package com.psato.devcamp.presentation.home;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -25,13 +27,16 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         mBinding = DataBindingUtil.bind(view);
-        getLoaderManager().initLoader(Constants.LoaderID.HOME_ID, new Bundle(), new LoaderCallBack(this));
         return view;
     }
 
-
-    private void bindViewModel(HomeFragmentViewModel viewModel) {
-        mBinding.setViewModel(viewModel);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        HomeFragmentViewModel homeFragmentViewModel =
+                ViewModelProviders.of(this,getViewModelFactory()).get(HomeFragmentViewModel.class);
+        mBinding.setViewModel(homeFragmentViewModel);
+        mBinding.setLifecycleOwner(this);
         mBinding.executePendingBindings();
     }
 
@@ -39,37 +44,5 @@ public class HomeFragment extends BaseFragment {
     public void onDestroyView() {
         mBinding = null;
         super.onDestroyView();
-    }
-
-    private static class LoaderCallBack implements LoaderManager.LoaderCallbacks {
-
-        private WeakReference<HomeFragment> mFragmentReference;
-
-        LoaderCallBack(HomeFragment fragment) {
-            mFragmentReference = new WeakReference<>(fragment);
-        }
-
-        @Override
-        public Loader onCreateLoader(int id, Bundle args) {
-            HomeFragment fragment = mFragmentReference.get();
-            if (fragment != null) {
-                DevCampApplication app = (DevCampApplication) fragment.getActivity().getApplication();
-                return new HomeVMLoader(fragment.getContext(), app.getApplicationComponent());
-            }
-            return null;
-        }
-
-        @Override
-        public void onLoadFinished(Loader loader, Object data) {
-            HomeFragment fragment = mFragmentReference.get();
-            if (fragment != null) {
-                fragment.bindViewModel((HomeFragmentViewModel) data);
-            }
-        }
-
-        @Override
-        public void onLoaderReset(Loader loader) {
-            loader.reset();
-        }
     }
 }

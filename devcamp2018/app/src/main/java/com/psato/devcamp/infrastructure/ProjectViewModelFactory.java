@@ -14,11 +14,9 @@ import java.util.concurrent.Callable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-@Singleton
 public class ProjectViewModelFactory implements ViewModelProvider.Factory {
     private final ArrayMap<Class, Callable<? extends ViewModel>> creators;
 
-    @Inject
     public ProjectViewModelFactory(ViewModelSubComponent viewModelSubComponent) {
         creators = new ArrayMap<>();
 

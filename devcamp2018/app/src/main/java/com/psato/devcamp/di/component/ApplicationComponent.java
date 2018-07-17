@@ -7,6 +7,7 @@ import com.psato.devcamp.di.module.NetworkModule;
 import com.psato.devcamp.di.module.ResourceRepositoryModule;
 import com.psato.devcamp.di.module.ShowRepositoryModule;
 import com.psato.devcamp.infrastructure.DevCampApplication;
+import com.psato.devcamp.infrastructure.ProjectViewModelFactory;
 
 import javax.inject.Singleton;
 
@@ -31,4 +32,6 @@ public interface ApplicationComponent {
     ShowRepository showRepository();
 
     ResourceRepository resourceRepository();
+
+    ProjectViewModelFactory viewModelFactory();
 }

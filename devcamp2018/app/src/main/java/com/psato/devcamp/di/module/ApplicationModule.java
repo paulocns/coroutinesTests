@@ -15,11 +15,14 @@
  */
 package com.psato.devcamp.di.module;
 
+import android.arch.lifecycle.ViewModelProvider;
+
 import com.psato.devcamp.data.remote.APIConstants;
 import com.psato.devcamp.di.component.ViewModelSubComponent;
 import com.psato.devcamp.infrastructure.DevCampApplication;
 import com.psato.devcamp.data.remote.APIConstants;
 import com.psato.devcamp.infrastructure.DevCampApplication;
+import com.psato.devcamp.infrastructure.ProjectViewModelFactory;
 
 import javax.inject.Singleton;
 
@@ -61,5 +64,13 @@ public class ApplicationModule {
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(APIConstants.BASE_URL)
                 .build();
+    }
+
+    @Singleton
+    @Provides
+    ProjectViewModelFactory provideViewModelFactory(
+            ViewModelSubComponent.Builder viewModelSubComponent) {
+
+        return new ProjectViewModelFactory(viewModelSubComponent.build());
     }
 }
