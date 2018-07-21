@@ -1,8 +1,9 @@
 package com.psato.devcamp.interactor.rx;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.SingleTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by athila on 15/03/16.
@@ -14,14 +15,9 @@ public class RxSchedulers {
      *
      * @return the transformer properly configured
      */
-    public static <T> Observable.Transformer<T, T> applyDefaultSchedulers() {
-        return new Observable.Transformer<T, T>() {
-            @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-            }
-        };
+    public static <T> SingleTransformer<T, T> applyDefaultSchedulers() {
+        return upstream -> upstream.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -30,13 +26,8 @@ public class RxSchedulers {
      *
      * @return the transformer properly configured
      */
-    public static <T> Observable.Transformer<T, T> applyImmediateSchedulers() {
-        return new Observable.Transformer<T, T>() {
-            @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable.subscribeOn(Schedulers.immediate())
-                        .observeOn(Schedulers.immediate());
-            }
-        };
+    public static <T> SingleTransformer<T, T> applyImmediateSchedulers() {
+        return upstream -> upstream.subscribeOn(Schedulers.trampoline())
+                .observeOn(Schedulers.trampoline());
     }
 }

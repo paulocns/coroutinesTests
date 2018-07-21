@@ -3,14 +3,14 @@ package com.psato.devcamp.presentation.MVVM;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.psato.devcamp.interactor.rx.DefaultSubscriber;
 import com.psato.devcamp.interactor.usecase.show.SearchShows;
 
 import javax.inject.Inject;
+
+import io.reactivex.functions.Consumer;
 
 public class QueryViewModelArc extends ViewModel {
 
@@ -20,7 +20,7 @@ public class QueryViewModelArc extends ViewModel {
 
     private MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> searchEnabled =  new MutableLiveData<>();
+    private MutableLiveData<Boolean> searchEnabled = new MutableLiveData<>();
 
     private Observer<String> queryObserver;
 
@@ -37,6 +37,12 @@ public class QueryViewModelArc extends ViewModel {
         query.observeForever(queryObserver);
     }
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        query.removeObserver(queryObserver);
+    }
+
     public void onQueryClick(View view) {
         searchShow(query.getValue());
     }
@@ -46,7 +52,10 @@ public class QueryViewModelArc extends ViewModel {
             showLoading.setValue(true);
             mSearchShows.unsubscribe();
             mSearchShows.setQuery(value);
-            mSearchShows.execute(new SearchSubscriber());
+            mSearchShows.execute((Consumer<String>) title -> {
+                showLoading.setValue(false);
+                result.setValue(title);
+            }, throwable -> showLoading.setValue(false));
         }
     }
 
@@ -64,24 +73,6 @@ public class QueryViewModelArc extends ViewModel {
 
     public MutableLiveData<String> getResult() {
         return result;
-    }
-
-
-    private class SearchSubscriber extends DefaultSubscriber<String> {
-
-        SearchSubscriber() {
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            showLoading.setValue(false);
-        }
-
-        @Override
-        public void onNext(String title) {
-            showLoading.setValue(false);
-            result.setValue(title);
-        }
     }
 
 }

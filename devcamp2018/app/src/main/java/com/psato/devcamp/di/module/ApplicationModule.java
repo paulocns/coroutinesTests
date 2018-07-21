@@ -15,12 +15,8 @@
  */
 package com.psato.devcamp.di.module;
 
-import android.arch.lifecycle.ViewModelProvider;
-
 import com.psato.devcamp.data.remote.APIConstants;
 import com.psato.devcamp.di.component.ViewModelSubComponent;
-import com.psato.devcamp.infrastructure.DevCampApplication;
-import com.psato.devcamp.data.remote.APIConstants;
 import com.psato.devcamp.infrastructure.DevCampApplication;
 import com.psato.devcamp.infrastructure.ProjectViewModelFactory;
 
@@ -31,7 +27,7 @@ import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -60,7 +56,7 @@ public class ApplicationModule {
 
         return new Retrofit.Builder()
                 .client(client)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(APIConstants.BASE_URL)
                 .build();

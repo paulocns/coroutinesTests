@@ -19,9 +19,6 @@ public class ProjectViewModelFactory implements ViewModelProvider.Factory {
 
     public ProjectViewModelFactory(ViewModelSubComponent viewModelSubComponent) {
         creators = new ArrayMap<>();
-
-        // View models cannot be injected directly because they won't be bound to the owner's
-        // view model scope.
         creators.put(HomeFragmentViewModel.class, () -> viewModelSubComponent.homeFragmentViewModel());
         creators.put(QueryViewModelArc.class, () -> viewModelSubComponent.queryViewModelArc());
     }

@@ -5,7 +5,7 @@ import com.psato.devcamp.data.remote.TraktAPI;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by psato on 29/06/16.
@@ -19,7 +19,7 @@ public class ShowRepositoryImpl implements ShowRepository {
     }
 
     @Override
-    public Observable<List<ShowInfo>> searchShow(final String query) {
+    public Single<List<ShowInfo>> searchShow(final String query) {
         return mTraktAPI.searchForShows(query, 100);
     }
 }
