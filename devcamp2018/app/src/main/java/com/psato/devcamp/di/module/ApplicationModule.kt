@@ -34,12 +34,12 @@ import javax.inject.Singleton
  * Dagger module that provides objects which will live during the application lifecycle.
  */
 @Module(subcomponents = arrayOf(ViewModelSubComponent::class))
-class ApplicationModule(private val mApplication: DevCampApplication) {
+class ApplicationModule(private val application: DevCampApplication) {
 
     @Provides
     @Singleton
     internal fun provideApplication(): DevCampApplication {
-        return mApplication
+        return application
     }
 
     @Provides

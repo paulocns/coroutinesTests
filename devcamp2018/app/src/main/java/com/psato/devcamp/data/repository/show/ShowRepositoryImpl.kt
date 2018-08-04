@@ -8,10 +8,10 @@ import java.io.IOException
  * Created by psato on 29/06/16.
  */
 
-class ShowRepositoryImpl(private val mTraktAPI: TraktAPI) : ShowRepository {
+class ShowRepositoryImpl(private val traktAPI: TraktAPI) : ShowRepository {
 
     @Throws(IOException::class)
     override fun searchShow(query: String): List<ShowInfo>? {
-        return mTraktAPI.searchForShows(query, 100).execute().body()
+        return traktAPI.searchForShows(query, 100).execute().body()
     }
 }

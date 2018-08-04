@@ -7,9 +7,9 @@ import com.psato.devcamp.R
  * Created by psato on 29/06/16.
  */
 
-class ResourceRepositoryImpl(var mDevCampApplication: DevCampApplication) : ResourceRepository {
+class ResourceRepositoryImpl(var devCampApplication: DevCampApplication) : ResourceRepository {
 
 
     override val notFoundShow: String
-        get() = mDevCampApplication.resources.getString(R.string.error)
+        get() = devCampApplication.resources.getString(R.string.error)
 }
