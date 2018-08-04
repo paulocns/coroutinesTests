@@ -12,18 +12,18 @@ import com.psato.devcamp.databinding.FragmentQueryMvvmBinding
 import com.psato.devcamp.presentation.base.BaseFragment
 
 class QueryFragment : BaseFragment() {
-    private var mBinding: FragmentQueryMvvmBinding? = null
+    private var binding: FragmentQueryMvvmBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_query_mvvm, container, false)
-        mBinding = DataBindingUtil.bind(view)
+        binding = DataBindingUtil.bind(view)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val queryViewModelArc = ViewModelProviders.of(this, viewModelFactory).get(QueryViewModelArc::class.java)
-        mBinding?.let{
+        binding?.let{
             it.viewModel = queryViewModelArc
             it.setLifecycleOwner(this)
             it.executePendingBindings()
@@ -31,7 +31,7 @@ class QueryFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        mBinding = null
+        binding = null
         super.onDestroyView()
     }
 }

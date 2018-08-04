@@ -9,7 +9,7 @@ import com.psato.devcamp.interactor.usecase.show.SearchShows
 import javax.inject.Inject
 
 class QueryViewModelArc @Inject
-constructor(private val mSearchShows: SearchShows?) : ViewModel() {
+constructor(private val searchShows: SearchShows?) : ViewModel() {
 
     val result = MutableLiveData<String>()
 
@@ -40,11 +40,11 @@ constructor(private val mSearchShows: SearchShows?) : ViewModel() {
     }
 
     private fun searchShow(value: String?) {
-        if (mSearchShows != null) {
+        if (searchShows != null) {
             showLoading.value = true
-            mSearchShows.unsubscribe()
-            mSearchShows.query = value
-            mSearchShows.execute({ title: String ->
+            searchShows.unsubscribe()
+            searchShows.query = value
+            searchShows.execute({ title: String ->
                 showLoading.value = false
                 result.value = title
             }, { throwable ->
