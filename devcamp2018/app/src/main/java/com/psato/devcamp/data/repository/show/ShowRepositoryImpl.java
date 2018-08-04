@@ -12,14 +12,14 @@ import io.reactivex.Single;
  */
 
 public class ShowRepositoryImpl implements ShowRepository {
-    private TraktAPI mTraktAPI;
+    private TraktAPI traktAPI;
 
     public ShowRepositoryImpl(TraktAPI traktAPI) {
-        mTraktAPI = traktAPI;
+        this.traktAPI = traktAPI;
     }
 
     @Override
     public Single<List<ShowInfo>> searchShow(final String query) {
-        return mTraktAPI.searchForShows(query, 100);
+        return traktAPI.searchForShows(query, 100);
     }
 }

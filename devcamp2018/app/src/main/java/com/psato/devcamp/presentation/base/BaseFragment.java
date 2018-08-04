@@ -19,7 +19,7 @@ import javax.inject.Inject;
 public abstract class BaseFragment extends Fragment {
 
     @Inject
-    ProjectViewModelFactory mViewModelFactory;
+    ProjectViewModelFactory viewModelFactory;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected ProjectViewModelFactory getViewModelFactory(){
-        return mViewModelFactory;
+        return viewModelFactory;
     }
 
 

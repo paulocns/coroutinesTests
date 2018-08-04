@@ -13,28 +13,28 @@ import io.reactivex.Single;
  */
 
 public class SearchShows extends UseCase {
-    private ShowRepository mShowRepository;
-    private ResourceRepository mResourceRepository;
-    private String mQuery;
+    private ShowRepository showRepository;
+    private ResourceRepository resourceRepository;
+    private String query;
 
     @Inject
     public SearchShows(ShowRepository showRepository, ResourceRepository resourceRepository) {
-        mShowRepository = showRepository;
-        mResourceRepository = resourceRepository;
+        this.showRepository = showRepository;
+        this.resourceRepository = resourceRepository;
     }
 
     public void setQuery(String query) {
-        mQuery = query;
+        this.query = query;
     }
 
     @Override
     protected Single<String> buildUseCaseObservable() {
-        return mShowRepository.searchShow(mQuery).map(showInfos -> {
+        return showRepository.searchShow(query).map(showInfos -> {
             if (showInfos != null && !showInfos.isEmpty()
                     && showInfos.get(0).getShow() != null) {
                 return showInfos.get(0).getShow().getTitle();
             } else {
-                return mResourceRepository.getNotFoundShow();
+                return resourceRepository.getNotFoundShow();
             }
         });
     }

@@ -35,16 +35,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module(subcomponents = {ViewModelSubComponent.class})
 public class ApplicationModule {
-    private final DevCampApplication mApplication;
+    private final DevCampApplication application;
 
     public ApplicationModule(DevCampApplication application) {
-        mApplication = application;
+        this.application = application;
     }
 
     @Provides
     @Singleton
     DevCampApplication provideApplication() {
-        return mApplication;
+        return application;
     }
 
     @Provides

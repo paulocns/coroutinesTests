@@ -14,14 +14,13 @@ import com.psato.devcamp.databinding.FragmentQueryMvvmBinding;
 import com.psato.devcamp.presentation.base.BaseFragment;
 
 public class QueryFragment extends BaseFragment {
-    private FragmentQueryMvvmBinding mBinding;
-    private QueryViewModelArc mViewModel;
+    private FragmentQueryMvvmBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_query_mvvm, container, false);
-        mBinding = DataBindingUtil.bind(view);
+        binding = DataBindingUtil.bind(view);
         return view;
     }
 
@@ -30,14 +29,14 @@ public class QueryFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         QueryViewModelArc queryViewModelArc =
                 ViewModelProviders.of(this, getViewModelFactory()).get(QueryViewModelArc.class);
-        mBinding.setViewModel(queryViewModelArc);
-        mBinding.setLifecycleOwner(this);
-        mBinding.executePendingBindings();
+        binding.setViewModel(queryViewModelArc);
+        binding.setLifecycleOwner(this);
+        binding.executePendingBindings();
     }
 
     @Override
     public void onDestroyView() {
-        mBinding = null;
+        binding = null;
         super.onDestroyView();
     }
 }

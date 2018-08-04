@@ -13,5 +13,5 @@ import javax.inject.Scope;
 @Scope
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LoaderScoped {
+public @interface FragmentScoped {
 }

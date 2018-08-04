@@ -24,11 +24,11 @@ public class QueryViewModelArc extends ViewModel {
 
     private Observer<String> queryObserver;
 
-    private SearchShows mSearchShows;
+    private SearchShows searchShows;
 
     @Inject
     public QueryViewModelArc(SearchShows searchShows) {
-        mSearchShows = searchShows;
+        this.searchShows = searchShows;
         showLoading.setValue(false);
         searchEnabled.setValue(false);
         result.setValue("");
@@ -48,11 +48,11 @@ public class QueryViewModelArc extends ViewModel {
     }
 
     private void searchShow(String value) {
-        if (mSearchShows != null) {
+        if (searchShows != null) {
             showLoading.setValue(true);
-            mSearchShows.unsubscribe();
-            mSearchShows.setQuery(value);
-            mSearchShows.execute((Consumer<String>) title -> {
+            searchShows.unsubscribe();
+            searchShows.setQuery(value);
+            searchShows.execute((Consumer<String>) title -> {
                 showLoading.setValue(false);
                 result.setValue(title);
             }, throwable -> showLoading.setValue(false));

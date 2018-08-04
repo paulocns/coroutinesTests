@@ -12,7 +12,7 @@ import io.reactivex.functions.Consumer;
 
 public abstract class UseCase {
 
-    private Disposable mSubscription = Disposables.empty();
+    private Disposable subscription = Disposables.empty();
 
 
     protected abstract Single buildUseCaseObservable();
@@ -28,11 +28,11 @@ public abstract class UseCase {
     public void execute(@NonNull Consumer onSuccess, @NonNull Consumer<? super Throwable> onError, SingleTransformer transformer) {
         // Need to use the calling chain. It does not work if we break the chain like:
         if (transformer != null) {
-            mSubscription = buildUseCaseObservable()
+            subscription = buildUseCaseObservable()
                     .compose(transformer)
                     .subscribe(onSuccess, onError);
         } else {
-            mSubscription = buildUseCaseObservable()
+            subscription = buildUseCaseObservable()
                     .subscribe(onSuccess, onError);
         }
     }
@@ -41,8 +41,8 @@ public abstract class UseCase {
      * Unsubscribes from current {@link rx.Subscription}.
      */
     public void unsubscribe() {
-        if (mSubscription != null && !mSubscription.isDisposed()) {
-            mSubscription.dispose();
+        if (subscription != null && !subscription.isDisposed()) {
+            subscription.dispose();
         }
     }
 }
