@@ -22,16 +22,13 @@ import com.psato.devcamp.data.remote.APIConstants
 import com.psato.devcamp.di.component.ViewModelSubComponent
 import com.psato.devcamp.infrastructure.DevCampApplication
 import com.psato.devcamp.infrastructure.ProjectViewModelFactory
-
-import javax.inject.Singleton
-
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 /**
  * Dagger module that provides objects which will live during the application lifecycle.
@@ -54,7 +51,6 @@ class ApplicationModule(private val mApplication: DevCampApplication) {
 
         return Retrofit.Builder()
                 .client(client)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(APIConstants.BASE_URL)
                 .build()

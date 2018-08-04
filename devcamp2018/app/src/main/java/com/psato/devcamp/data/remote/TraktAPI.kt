@@ -1,8 +1,6 @@
 package com.psato.devcamp.data.remote
 
 import com.psato.devcamp.data.entity.ShowInfo
-
-import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers

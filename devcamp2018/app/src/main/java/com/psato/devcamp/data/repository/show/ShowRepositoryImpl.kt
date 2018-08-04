@@ -2,10 +2,7 @@ package com.psato.devcamp.data.repository.show
 
 import com.psato.devcamp.data.entity.ShowInfo
 import com.psato.devcamp.data.remote.TraktAPI
-
 import java.io.IOException
-
-import io.reactivex.Single
 
 /**
  * Created by psato on 29/06/16.

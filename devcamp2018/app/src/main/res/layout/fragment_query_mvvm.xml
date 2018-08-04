@@ -81,8 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#88000000"
-            android:visibility="@{viewModel.showLoading}"
-            android:clickable="true">
+            android:visibility="@{viewModel.showLoading}">
             <ProgressBar
                 android:layout_width="50dp"
                 android:layout_height="50dp"
