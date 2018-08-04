@@ -29,13 +29,14 @@ public class SearchShows extends UseCase {
 
     @Override
     protected Single<String> buildUseCaseObservable() {
-        return mShowRepository.searchShow(mQuery).map(showInfos -> {
-            if (showInfos != null && !showInfos.isEmpty()
-                    && showInfos.get(0).getShow() != null) {
-                return showInfos.get(0).getShow().getTitle();
-            } else {
-                return mResourceRepository.getNotFoundShow();
-            }
-        });
+//        return mShowRepository.searchShow(mQuery).map(showInfos -> {
+//            if (showInfos != null && !showInfos.isEmpty()
+//                    && showInfos.get(0).getShow() != null) {
+//                return showInfos.get(0).getShow().getTitle();
+//            } else {
+//                return mResourceRepository.getNotFoundShow();
+//            }
+//        });
+        return Single.just("1");
     }
 }
