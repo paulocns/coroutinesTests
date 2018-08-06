@@ -15,7 +15,7 @@ constructor(private val showRepository: ShowRepository, private val resourceRepo
 
     var query: String? = null
 
-    override suspend fun executeImpl(): String {
+    override suspend fun executeOnBackground(): String {
         query?.let {
             val showsInfo = showRepository.searchShow(it)
             val showName: String? = showsInfo?.getOrNull(0)?.show?.title

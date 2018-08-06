@@ -9,7 +9,7 @@ abstract class UseCase<T> {
     protected var parentJob: Job = Job()
 
 
-    protected abstract suspend fun executeImpl(): T
+    protected abstract suspend fun executeOnBackground(): T
 
     fun execute(onComplete: (T) -> Unit, onError: (Throwable) -> Unit) {
         parentJob.cancel()
@@ -17,7 +17,7 @@ abstract class UseCase<T> {
         launch(UI,parent = parentJob) {
             try {
                 val result = background {
-                    executeImpl()
+                    executeOnBackground()
                 }
                 onComplete.invoke(result.await())
             } catch(e: CancellationException) {

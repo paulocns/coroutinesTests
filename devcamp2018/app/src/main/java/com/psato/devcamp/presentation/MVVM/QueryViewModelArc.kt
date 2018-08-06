@@ -36,14 +36,14 @@ constructor(private val searchShows: SearchShows?) : ViewModel() {
     }
 
     fun onQueryClick(view: View) {
-        searchShow(query.value)
+        searchShow()
     }
 
-    private fun searchShow(value: String?) {
+    private fun searchShow() {
         if (searchShows != null) {
             showLoading.value = true
             searchShows.unsubscribe()
-            searchShows.query = value
+            searchShows.query = query.value
             searchShows.execute({ title: String ->
                 showLoading.value = false
                 result.value = title
