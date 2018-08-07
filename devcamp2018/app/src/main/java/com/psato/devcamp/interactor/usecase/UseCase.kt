@@ -31,7 +31,6 @@ import kotlin.coroutines.experimental.CoroutineContext
  * By convention each UseCase implementation will return the result using a coroutine
  * that will execute its job in a background thread and will post the result in the UI thread.
  */
-
 abstract class UseCase<T> {
 
     protected var parentJob: Job = Job()
