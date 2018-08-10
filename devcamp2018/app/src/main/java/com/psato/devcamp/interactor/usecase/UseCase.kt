@@ -34,6 +34,8 @@ import kotlin.coroutines.experimental.CoroutineContext
 abstract class UseCase<T> {
 
     protected var parentJob: Job = Job()
+    var backgroundContext: CoroutineContext = CommonPool
+    var foregroundContext: CoroutineContext = UI
 
 
     protected abstract suspend fun executeOnBackground(): T
@@ -41,27 +43,27 @@ abstract class UseCase<T> {
     fun execute(onComplete: (T) -> Unit, onError: (Throwable) -> Unit) {
         parentJob.cancel()
         parentJob = Job()
-        launch(UI,parent = parentJob) {
+        launch(foregroundContext, parent = parentJob) {
             try {
                 val result = background {
                     executeOnBackground()
                 }
                 onComplete.invoke(result.await())
-            } catch(e: CancellationException) {
+            } catch (e: CancellationException) {
                 Log.d("UseCase", "canceled by user")
-            }catch (e: Exception) {
-                    onError(e)
+            } catch (e: Exception) {
+                onError(e)
             }
         }
     }
 
-    protected suspend fun <X> background(context: CoroutineContext = CommonPool, block: suspend () -> X): Deferred<X> {
+    protected suspend fun <X> background(context: CoroutineContext = backgroundContext, block: suspend () -> X): Deferred<X> {
         return async(context, parent = parentJob) {
             block.invoke()
         }
     }
 
-    fun unsubscribe(){
+    fun unsubscribe() {
         parentJob.cancel()
     }
 
