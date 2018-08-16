@@ -1,5 +1,6 @@
 package com.psato.devcamp.data.repository.show
 
+import com.psato.devcamp.data.entity.Rating
 import com.psato.devcamp.data.entity.ShowInfo
 
 import java.io.IOException
@@ -10,5 +11,8 @@ import java.io.IOException
 
 interface ShowRepository {
     @Throws(IOException::class)
-    fun searchShow(query: String): List<ShowInfo>?
+    fun searchShow(query: String): List<ShowInfo>
+
+    @Throws(IOException::class)
+    fun showRating(id: String): Rating
 }

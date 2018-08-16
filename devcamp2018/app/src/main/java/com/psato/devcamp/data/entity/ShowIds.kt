@@ -8,16 +8,16 @@ import com.google.gson.annotations.SerializedName
 
 class ShowIds {
     @SerializedName("trakt")
-    private val mTrakt: String? = null
+    val trakt: String? = null
     @SerializedName("slug")
-    private val mSlug: String? = null
+    val slug: String? = null
     @SerializedName("tvdb")
-    private val mTvdb: String? = null
+    val tvdb: String? = null
     @SerializedName("imdb")
-    private val mImdb: String? = null
+    val imdb: String? = null
     @SerializedName("tmdb")
-    private val mTmdb: String? = null
+    val tmdb: String? = null
     @SerializedName("tvrage")
-    private val mTvrage: String? = null
+    val tvrage: String? = null
 
 }

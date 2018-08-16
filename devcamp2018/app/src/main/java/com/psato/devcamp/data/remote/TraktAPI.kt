@@ -1,9 +1,11 @@
 package com.psato.devcamp.data.remote
 
+import com.psato.devcamp.data.entity.Rating
 import com.psato.devcamp.data.entity.ShowInfo
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -15,4 +17,9 @@ interface TraktAPI {
             APIConstants.HEADER_CLIENT_ID + ": " + APIConstants.CLIENT_ID)
     @GET("search/show")
     fun searchForShows(@Query("query") query: String, @Query("limit") limit: Int): Call<List<ShowInfo>>
+
+    @Headers(APIConstants.HEADER_API_VERSION + ": 2",
+            APIConstants.HEADER_CLIENT_ID + ": " + APIConstants.CLIENT_ID)
+    @GET("shows/{id}/ratings")
+    fun getShowRating(@Path("id") id: String): Call<Rating>
 }
