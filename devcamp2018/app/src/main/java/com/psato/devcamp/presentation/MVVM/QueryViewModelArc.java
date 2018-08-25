@@ -4,9 +4,14 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
+import com.psato.devcamp.data.entity.ShowResponse;
 import com.psato.devcamp.interactor.usecase.show.SearchShows;
+
+import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -52,9 +57,12 @@ public class QueryViewModelArc extends ViewModel {
             showLoading.setValue(true);
             searchShows.unsubscribe();
             searchShows.setQuery(value);
-            searchShows.execute((Consumer<String>) title -> {
+            Date start = new Date();
+            searchShows.execute((Consumer<List<ShowResponse>>) title -> {
+                Date end = new Date();
+                Log.e("SATO", "SATO - Time: " + (end.getTime() - start.getTime())/1000 + "s");
                 showLoading.setValue(false);
-                result.setValue(title);
+                result.setValue(title.get(0).getName());
             }, throwable -> showLoading.setValue(false));
         }
     }

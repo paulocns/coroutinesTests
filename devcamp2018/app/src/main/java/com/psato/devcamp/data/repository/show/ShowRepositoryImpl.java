@@ -1,6 +1,7 @@
 package com.psato.devcamp.data.repository.show;
 
 import com.psato.devcamp.data.entity.ShowInfo;
+import com.psato.devcamp.data.entity.ShowRating;
 import com.psato.devcamp.data.remote.TraktAPI;
 
 import java.util.List;
@@ -20,6 +21,11 @@ public class ShowRepositoryImpl implements ShowRepository {
 
     @Override
     public Single<List<ShowInfo>> searchShow(final String query) {
-        return traktAPI.searchForShows(query, 100);
+        return traktAPI.searchForShows(query, 200);
+    }
+
+    @Override
+    public Single<ShowRating> showRating(String id) {
+        return traktAPI.getShowRating(id);
     }
 }

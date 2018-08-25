@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class ShowIds {
     @SerializedName("trakt")
-    private String mTrakt;
+    private String trakt;
     @SerializedName("slug")
     private String mSlug;
     @SerializedName("tvdb")
@@ -20,4 +20,7 @@ public class ShowIds {
     @SerializedName("tvrage")
     private String mTvrage;
 
+    public String getTrakt() {
+        return trakt;
+    }
 }

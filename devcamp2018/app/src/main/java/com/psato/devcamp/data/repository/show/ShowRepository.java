@@ -1,6 +1,7 @@
 package com.psato.devcamp.data.repository.show;
 
 import com.psato.devcamp.data.entity.ShowInfo;
+import com.psato.devcamp.data.entity.ShowRating;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ import io.reactivex.Single;
 
 public interface ShowRepository {
     Single<List<ShowInfo>> searchShow(String query);
+
+    Single<ShowRating> showRating(String id);
 }
