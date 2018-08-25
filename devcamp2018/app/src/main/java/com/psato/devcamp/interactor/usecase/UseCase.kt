@@ -34,7 +34,7 @@ import kotlin.coroutines.experimental.CoroutineContext
 abstract class UseCase<T> {
 
     protected var parentJob: Job = Job()
-    var backgroundContext: CoroutineContext = CommonPool
+    var backgroundContext: CoroutineContext = IO
     var foregroundContext: CoroutineContext = UI
 
 
@@ -45,10 +45,10 @@ abstract class UseCase<T> {
         parentJob = Job()
         launch(foregroundContext, parent = parentJob) {
             try {
-                val result = background {
+                val result = withContext(backgroundContext) {
                     executeOnBackground()
                 }
-                onComplete.invoke(result.await())
+                onComplete.invoke(result)
             } catch (e: CancellationException) {
                 Log.d("UseCase", "canceled by user")
             } catch (e: Exception) {

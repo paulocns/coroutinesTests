@@ -1,4 +1,4 @@
-package com.psato.devcamp.presentation.MVVM
+package com.psato.devcamp.presentation.search
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
@@ -12,7 +12,7 @@ import java.util.*
 import javax.inject.Inject
 
 class QueryViewModelArc @Inject
-constructor(private val searchShows: SearchShows?) : ViewModel() {
+constructor(private val searchShows: SearchShows) : ViewModel() {
 
     val result = MutableLiveData<String>()
 
@@ -35,6 +35,7 @@ constructor(private val searchShows: SearchShows?) : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
+        searchShows.unsubscribe()
         query.removeObserver(queryObserver)
     }
 
@@ -43,21 +44,19 @@ constructor(private val searchShows: SearchShows?) : ViewModel() {
     }
 
     private fun searchShow() {
-        if (searchShows != null) {
-            showLoading.value = true
-            searchShows.unsubscribe()
-            searchShows.query = query.value
-            val start = Date()
-            searchShows.execute({ list: List<ShowResponse> ->
-                val end =  Date()
-                Log.e("SATO", "SATO - Time: " + (end.time - start.time)/1000 + "s")
-                showLoading.value = false
-                result.value = list[0].name
-            }, { throwable ->
-                showLoading.value = false
-                result.value = throwable.message
-            })
-        }
+        showLoading.value = true
+        searchShows.unsubscribe()
+        searchShows.query = query.value
+        val start = Date()
+        searchShows.execute({ list: List<ShowResponse> ->
+            val end = Date()
+            Log.e("SATO", "SATO - Time: " + (end.time - start.time) / 1000 + "s")
+            showLoading.value = false
+            result.value = list[0].name
+        }, { throwable ->
+            showLoading.value = false
+            result.value = throwable.message
+        })
     }
 
 }

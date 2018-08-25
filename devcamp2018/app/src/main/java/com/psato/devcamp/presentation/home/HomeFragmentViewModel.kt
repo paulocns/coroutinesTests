@@ -10,6 +10,6 @@ class HomeFragmentViewModel @Inject
 constructor() : ViewModel() {
 
     fun onMVVMClicked(view: View) {
-        view.context.startActivity(Intent(view.context, com.psato.devcamp.presentation.MVVM.QueryActivity::class.java))
+        view.context.startActivity(Intent(view.context, com.psato.devcamp.presentation.search.QueryActivity::class.java))
     }
 }

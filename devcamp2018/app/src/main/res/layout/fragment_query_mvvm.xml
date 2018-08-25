@@ -9,7 +9,7 @@
 
     <variable
         name="viewModel"
-        type="com.psato.devcamp.presentation.MVVM.QueryViewModelArc"/>
+        type="com.psato.devcamp.presentation.search.QueryViewModelArc"/>
 </data>
     <FrameLayout
         android:layout_width="match_parent"

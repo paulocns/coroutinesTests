@@ -1,4 +1,4 @@
-package com.psato.devcamp.presentation.MVVM
+package com.psato.devcamp.presentation.search
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -14,7 +14,7 @@ class QueryActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()
-                    .add(R.id.fragment_content, com.psato.devcamp.presentation.MVVM.QueryFragment())
+                    .add(R.id.fragment_content, com.psato.devcamp.presentation.search.QueryFragment())
                     .commit()
         }
     }

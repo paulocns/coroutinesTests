@@ -1,4 +1,4 @@
-package com.psato.devcamp.presentation.MVVM
+package com.psato.devcamp.presentation.search
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
@@ -22,7 +22,7 @@ class QueryFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val queryViewModelArc = ViewModelProviders.of(this, viewModelFactory).get(QueryViewModelArc::class.java)
+        val queryViewModelArc:QueryViewModelArc? = ViewModelProviders.of(this, viewModelFactory).get(QueryViewModelArc::class.java)
         binding?.let{
             it.viewModel = queryViewModelArc
             it.setLifecycleOwner(this)
