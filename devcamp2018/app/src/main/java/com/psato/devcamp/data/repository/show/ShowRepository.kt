@@ -11,8 +11,8 @@ import java.io.IOException
 
 interface ShowRepository {
     @Throws(IOException::class)
-    fun searchShow(query: String): List<ShowInfo>
+    suspend fun searchShow(query: String): List<ShowInfo>
 
     @Throws(IOException::class)
-    fun showRating(id: String): Rating
+    suspend fun showRating(id: String): Rating
 }

@@ -3,6 +3,7 @@ package com.psato.devcamp.data.repository.show
 import com.psato.devcamp.data.entity.Rating
 import com.psato.devcamp.data.entity.ShowInfo
 import com.psato.devcamp.data.remote.TraktAPI
+import ru.gildor.coroutines.retrofit.await
 import java.io.IOException
 
 /**
@@ -10,12 +11,12 @@ import java.io.IOException
  */
 
 class ShowRepositoryImpl(private val traktAPI: TraktAPI) : ShowRepository {
-    override fun showRating(id: String): Rating {
-        return traktAPI.getShowRating(id).execute().body()!!
+    override suspend fun showRating(id: String): Rating {
+        return traktAPI.getShowRating(id).await()
     }
 
     @Throws(IOException::class)
-    override fun searchShow(query: String): List<ShowInfo> {
-        return traktAPI.searchForShows(query, 200).execute().body()!!
+    override suspend fun searchShow(query: String): List<ShowInfo> {
+        return traktAPI.searchForShows(query, 200).await()
     }
 }
