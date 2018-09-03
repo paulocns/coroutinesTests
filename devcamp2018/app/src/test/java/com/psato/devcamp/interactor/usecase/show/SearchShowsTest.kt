@@ -41,9 +41,18 @@ class SearchShowsTest {
                 check(true) { "runBlocking is not allowed in Android main looper thread" }
     }
 
+    fun runTestBlocking(block: suspend () -> Unit) {
+        val thread = Thread {
+            runBlocking {
+                block.invoke()
+            }
+        }
+        thread.join()
+    }
+
     @Test
     fun executeOnBackground_query() {
-        runBlocking {
+        runTestBlocking {
             //Arrange
             val query = "game"
             usecase.query = query
