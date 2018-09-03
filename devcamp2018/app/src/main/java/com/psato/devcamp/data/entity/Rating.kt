@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 class Rating {
     @SerializedName("rating")
-    val rating: Double = 0.0
+    var rating: Double = 0.0
 
 }

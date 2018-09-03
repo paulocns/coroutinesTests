@@ -2,7 +2,6 @@ package com.psato.devcamp.data.repository.show
 
 import com.psato.devcamp.data.entity.Rating
 import com.psato.devcamp.data.entity.ShowInfo
-
 import java.io.IOException
 
 /**

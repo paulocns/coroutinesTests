@@ -9,9 +9,9 @@ import com.google.gson.annotations.SerializedName
 class ShowInfo {
 
     @SerializedName("type")
-    val type: String? = null
+    var type: String? = null
     @SerializedName("score")
-    val score: String? = null
+    var score: String? = null
     @SerializedName("show")
-    val show: Show? = null
+    var show: Show? = null
 }
