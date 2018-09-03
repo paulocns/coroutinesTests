@@ -41,6 +41,7 @@ class SearchShowsTest {
                 check(true) { "runBlocking is not allowed in Android main looper thread" }
     }
 
+    //need for coroutines on 0.24.0, can be removed on 25
     fun runTestBlocking(block: suspend () -> Unit) {
         val thread = Thread {
             runBlocking {
