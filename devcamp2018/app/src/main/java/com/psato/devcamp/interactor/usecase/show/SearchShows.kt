@@ -19,7 +19,7 @@ constructor(private val showRepository: ShowRepository) :
     override suspend fun executeOnBackground(): List<ShowResponse> {
         query?.let { query ->
             return showRepository.searchShow(query).map {
-                background {
+                runAsync {
                     val rating: Rating = showRepository.showRating(it.show!!.ids!!.trakt!!)
                     ShowResponse(it.show.title!!, rating.rating)
                 }

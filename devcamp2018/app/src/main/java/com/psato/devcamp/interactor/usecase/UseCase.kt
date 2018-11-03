@@ -18,9 +18,8 @@
 package com.psato.devcamp.interactor.usecase
 
 import android.util.Log
-import kotlinx.coroutines.experimental.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 
 /**
@@ -29,42 +28,85 @@ import kotlin.coroutines.experimental.CoroutineContext
  * in the application should implement this contract).
  * <p>
  * By convention each UseCase implementation will return the result using a coroutine
- * that will execute its job in a background thread and will post the result in the UI thread.
+ * that will execute its job in a runAsync thread and will post the result in the UI thread.
  */
+typealias CompletionBlock<T> = UseCase.Request<T>.() -> Unit
+
 abstract class UseCase<T> {
 
-    protected var parentJob: Job = Job()
-    var backgroundContext: CoroutineContext = IO
-    var foregroundContext: CoroutineContext = UI
-
+    private var parentJob: Job = Job()
+    var backgroundContext: CoroutineContext = Dispatchers.IO
+    var foregroundContext: CoroutineContext = Dispatchers.Main
 
     protected abstract suspend fun executeOnBackground(): T
 
-    fun execute(onComplete: (T) -> Unit, onError: (Throwable) -> Unit) {
-        parentJob.cancel()
+    fun execute(block: CompletionBlock<T>) {
+        val response = Request<T>().apply { block() }
+        unsubscribe()
         parentJob = Job()
-        launch(foregroundContext, parent = parentJob) {
+        CoroutineScope(foregroundContext + parentJob).launch {
             try {
                 val result = withContext(backgroundContext) {
                     executeOnBackground()
                 }
-                onComplete.invoke(result)
-            } catch (e: CancellationException) {
+                response(result)
+            } catch (cancellationException: CancellationException) {
                 Log.d("UseCase", "canceled by user")
+                response(cancellationException)
             } catch (e: Exception) {
-                onError(e)
+                Log.e("UseCase", "exception", e)
+                response(e)
             }
         }
     }
 
-    protected suspend fun <X> background(context: CoroutineContext = backgroundContext, block: suspend () -> X): Deferred<X> {
-        return async(context, parent = parentJob) {
+    protected suspend fun <X> runAsync(context: CoroutineContext = backgroundContext, block: suspend () -> X): Deferred<X> {
+        return CoroutineScope(context + parentJob).async {
             block.invoke()
         }
     }
 
     fun unsubscribe() {
-        parentJob.cancel()
+        parentJob.apply {
+            cancelChildren()
+            cancel()
+        }
     }
 
+
+    class Request<T> {
+        private var onComplete: ((T) -> Unit)? = null
+        private var onError: ((Throwable) -> Unit)? = null
+        private var onCancel: ((CancellationException) -> Unit)? = null
+
+        fun onComplete(block: (T) -> Unit) {
+            onComplete = block
+        }
+
+        fun onError(block: (Throwable) -> Unit) {
+            onError = block
+        }
+
+        fun onCancel(block: (CancellationException) -> Unit) {
+            onCancel = block
+        }
+
+        operator fun invoke(result: T) {
+            onComplete?.let {
+                it.invoke(result)
+            }
+        }
+
+        operator fun invoke(error: Throwable) {
+            onError?.let {
+                it.invoke(error)
+            }
+        }
+
+        operator fun invoke(error: CancellationException) {
+            onCancel?.let {
+                it.invoke(error)
+            }
+        }
+    }
 }

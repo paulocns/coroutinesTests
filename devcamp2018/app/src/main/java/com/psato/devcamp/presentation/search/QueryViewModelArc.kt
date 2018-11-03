@@ -16,7 +16,7 @@ constructor(private val searchShows: SearchShows) : ViewModel() {
 
     val result = MutableLiveData<String>()
 
-    val query = MutableLiveData<String>()
+    val queryValue = MutableLiveData<String>()
 
     val showLoading = MutableLiveData<Boolean>()
 
@@ -28,15 +28,15 @@ constructor(private val searchShows: SearchShows) : ViewModel() {
         showLoading.value = false
         searchEnabled.value = false
         result.value = ""
-        query.value = ""
+        queryValue.value = ""
         queryObserver = Observer { query -> searchEnabled.value = !TextUtils.isEmpty(query) }
-        query.observeForever(queryObserver)
+        queryValue.observeForever(queryObserver)
     }
 
     override fun onCleared() {
         super.onCleared()
         searchShows.unsubscribe()
-        query.removeObserver(queryObserver)
+        queryValue.removeObserver(queryObserver)
     }
 
     fun onQueryClick(view: View) {
@@ -45,18 +45,24 @@ constructor(private val searchShows: SearchShows) : ViewModel() {
 
     private fun searchShow() {
         showLoading.value = true
-        searchShows.unsubscribe()
-        searchShows.query = query.value
         val start = Date()
-        searchShows.execute({ list: List<ShowResponse> ->
-            val end = Date()
-            Log.e("SATO", "SATO - Time: " + (end.time - start.time) / 1000 + "s")
-            showLoading.value = false
-            result.value = list[0].name
-        }, { throwable ->
-            showLoading.value = false
-            result.value = throwable.message
-        })
+        queryValue.value?.let {
+            searchShows.query = it
+            searchShows.execute {
+
+                onComplete { list: List<ShowResponse> ->
+                    val end = Date()
+                    Log.e("SATO", "SATO - Time: " + (end.time - start.time) / 1000 + "s")
+                    showLoading.value = false
+                    result.value = list[0].name
+                }
+
+                onError { throwable ->
+                    showLoading.value = false
+                    result.value = throwable.message
+                }
+            }
+        }
     }
 
 }
